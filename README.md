@@ -1,37 +1,31 @@
 # Sightings
 
-This is a sample application for "How to Build an API with Python and Flask" on Tech.Pro.
+This is a modified version of the sample application for "How to Build an API with Python and Flask" on Tech.Pro.
 
-The data used for this application is a geocoded version of Infochimps's UFO Sightings dataset, and [can be downloaded here](https://www.dropbox.com/s/aoim0kwg7v30fii/sightings.tsv).
+    1. instead of MySQL - sqlite3;
+    2. dried out SQLAchemy result serialization;
+    3. demostation of custom sqlite3 function creation both with extension library and Pythons;
 
-This repo has the following checkpoints
+Download data from [sightings.tsv https://www.dropbox.com/s/aoim0kwg7v30fii/sightings.tsv]
 
-* [00_configuration](https://github.com/cuttarug/sightings/tree/00_configuration)
-* [01_sighting_model](https://github.com/cuttarug/sightings/tree/01_sighting_model)
-* [02_sightings_collection](https://github.com/cuttarug/sightings/tree/02_sightings_collection)
-* [03_sighting_element](https://github.com/cuttarug/sightings/tree/03_sighting_element)
-* [04_limit_offset](https://github.com/cuttarug/sightings/tree/04_limit_offset)
-* [05_location_radius](https://github.com/cuttarug/sightings/tree/05_location_radius)
+Remove double quotes:
+    sed -i 's/"//g' sightings.tsv
 
-You can switch to each checkpoint to see what the code looks like up to that point by either cloning the repo or using the GitHub branch menu.
+Create sqlite3 DB and table:
 
-## Cloning the repo
+    $ sqlite3 db/ufosightings.sqlite3
 
-First clone this repo by running
+CREATE TABLE sightings (
+    id  INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    sighted_at INTEGER ,
+    reported_at INTEGER ,
+    location TEXT,
+    shape TEXT,
+    duration TEXT,
+    description TEXT,
+    lat REAL,
+    lng REAL
+  );
 
-```bash
-$ git clone git://github.com/cuttarug/sightings.git
-```
-
-Then fetch each checkpoint to see what the code looks like at that point by running `$ git checkout [<checkpoint-name>]`. For example, to view the code at checkpoint "03\_sighting\_element", type
-
-```bash
-$ git checkout 03_sighting_element
-```
-
-## Using the GitHub branch menu
-Alternatively, you can use GitHub's web interface to view each checkpoint. Click on the branch menu and select the checkpoint you want to view, shown below:
-
-![GitHub Branch Menu](https://raw.github.com/cuttarug/sightings/master/branch-menu.png)
-
-
+-- Import data:
+.import /home/ENDACE/rad.cirskis/Downloads/sightings2.tsv sightings
