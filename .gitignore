@@ -1,2 +1,8 @@
 .md~
 *~
+bin/
+include/
+lib/
+local/
+*.sqlite3
+
